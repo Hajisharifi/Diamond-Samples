@@ -1,0 +1,57 @@
+﻿@inject Diamond.AspNetCore.Html.Captcha.ICachedCaptcha captcha
+@{
+    this.ViewData["Title"] = "Captcha Test";
+    string Captcha_RefID = captcha.NewRefID();
+}
+
+<form asp-antiforgery="true">
+
+    <p></p>
+    <p>@this.ViewBag.Message</p>
+    <p></p>
+
+    <div class="row">
+        <div class="col-md-1 col-sm-1">
+
+            Captcha
+
+        </div>
+        <div class="col-md-2 col-sm-3">
+
+            <input type="hidden" name="Captcha_RefID" value="@Captcha_RefID" />
+            <input type="text" name="Input_Captcha" autocomplete="off" autocorrect="off" />
+
+        </div>
+        <div class="col-md-2 col-sm-3">
+
+            <img id="CaptchaImage" src="/Home/CaptchaImage/@Captcha_RefID" />
+
+        </div>
+        <div class="col-md-2 col-sm-3">
+
+            <a href="#" onclick="OnCaptchaRefresh()">Refresh</a>
+
+            <script language="javascript">
+
+                var version = 0;
+
+                function OnCaptchaRefresh()
+                {
+                    version++;
+                    var img = document.getElementById("CaptchaImage");
+                    img.src = "/Home/CaptchaImage/@Captcha_RefID?version=" + version;
+                    return false;
+                }
+
+            </script>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 col-sm-4">
+            <input type="submit" name="submit" value="Submit" />
+        </div>
+    </div>
+
+</form>

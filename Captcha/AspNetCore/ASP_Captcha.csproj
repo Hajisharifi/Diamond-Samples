@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <RootNamespace>H2.ASP_Captcha</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <PackageProjectUrl>https://github.com/Hajisharifi/Diamond-Samples/Captcha/AspNetCore</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Diamond.AspNetCore" Version="2018.7.0" />
+  </ItemGroup>
+
+</Project>
