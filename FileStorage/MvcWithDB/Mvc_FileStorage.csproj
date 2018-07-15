@@ -45,12 +45,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Diamond.FileStorage, Version=2018.7.0.0, Culture=neutral, PublicKeyToken=094e473293d6d748, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Diamond.FileStorage.2018.0.0\lib\net45\Diamond.FileStorage.dll</HintPath>
+    <Reference Include="Diamond.FileStorage">
+      <HintPath>packages\Diamond.FileStorage.2018.7.0\lib\net45\Diamond.FileStorage.dll</HintPath>
     </Reference>
     <Reference Include="Diamond.FileStorage.Web">
-      <HintPath>packages\Diamond.FileStorage.2018.0.0\lib\net45\Diamond.FileStorage.Web.dll</HintPath>
+      <HintPath>packages\Diamond.FileStorage.2018.7.0\lib\net45\Diamond.FileStorage.Web.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
