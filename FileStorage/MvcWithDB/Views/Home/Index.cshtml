@@ -1,0 +1,41 @@
+﻿@model IEnumerable<H2.Mvc_FileStorage.Models.File>
+@{
+    this.ViewBag.Title = "Welcome";
+}
+
+<h2>Home</h2>
+<p>
+    @this.Html.ActionLink("New Upload", "Upload")
+</p>
+<table class="grid">
+    <tr>
+        <th>
+            @this.Html.DisplayNameFor(model => model.FileSize)
+        </th>
+        <th>
+            @this.Html.DisplayNameFor(model => model.FileName)
+        </th>
+        <th>
+            @this.Html.DisplayNameFor(model => model.RegisterDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in this.Model) {
+    <tr>
+        <td>
+            @this.Html.DisplayFor(modelItem => item.FileSize)
+        </td>
+        <td>
+            @this.Html.DisplayFor(modelItem => item.FileName)
+        </td>
+        <td>
+            @this.Html.DisplayFor(modelItem => item.RegisterDate)
+        </td>
+        <td>
+            @this.Html.ActionLink("Download", "Download", new { id = item.FileId })
+        </td>
+    </tr>
+}
+
+</table>
