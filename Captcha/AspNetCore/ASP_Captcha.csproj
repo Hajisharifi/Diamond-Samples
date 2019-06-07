@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Diamond.AspNetCore" Version="2018.7.0" />
+    <PackageReference Include="Diamond.AspNetCore" Version="2019.0.0" />
   </ItemGroup>
 
 </Project>
