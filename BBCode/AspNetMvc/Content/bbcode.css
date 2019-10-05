@@ -1,0 +1,133 @@
+﻿.bbcode-editor {
+    width: 100%;
+    max-width: none;
+    resize: vertical;
+    overflow: auto;
+}
+
+.bbcode-viewer {
+    padding: 5px;
+    line-height: 2.0;
+    border: 1px solid gray;
+}
+
+.bbcode-ltr {
+    display: inline;
+    direction: ltr;
+}
+
+.bbcode-rtl {
+    display: inline;
+    direction: rtl;
+}
+
+.bbcode-center,
+.bbcode-youtube {
+    display: block;
+    text-align: center;
+    margin: 5px auto;
+}
+
+.bbcode-right {
+    display: block;
+    text-align: right;
+}
+
+.bbcode-left {
+    display: block;
+    text-align: left;
+}
+
+.bbcode-i {
+    display: inline;
+    font-style: italic;
+}
+
+.bbcode-b {
+    display: inline;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.bbcode-u {
+    display: inline;
+    text-decoration: underline;
+}
+
+.bbcode-color,
+.bbcode-size,
+.bbcode-font{
+    display: inline;
+}
+
+.bbcode-url {
+    color: blue;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.bbcode-code {
+    display: block;
+    direction: ltr;
+    padding: 5px;
+    margin: 5px 20px 20px 20px;
+    border: 1px inset gray;
+    text-align: left;
+    overflow: scroll;
+    background: #e1e4f3 none repeat-x;
+    font: 12px Tahoma;
+    line-height: 1.4;
+    -ms-word-wrap: break-word;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+}
+
+.bbcode-quote {
+    display: block;
+    padding: 5px;
+    margin: 5px 10px;
+    border: 1px solid #4b6da6;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background: #e1e4f3 none;
+}
+
+    .bbcode-quote > div:first-child {
+        color: green;
+        border-bottom: 1px solid #d1c4f3;
+    }
+
+.bbcode-img {
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    -ms-zoom: 1;
+}
+
+.bbcode-center .bbcode-img,
+.bbcode-center .bbcode-img div,
+.bbcode-center .bbcode-img img {
+    margin: 0 auto;
+}
+
+.bbcode-imageresizer-warning {
+    display: block;
+    font-size: 0.8em;
+    text-align: center;
+    background: #FFFACD url('bbcode-image-resize.png') 5px 5px no-repeat;
+    color: #4f4300;
+    border: 1px solid #FFEC7D;
+    padding: 2px 20px 0 20px;
+    margin-top: 10px;
+    height: 27px !important;
+    cursor: pointer;
+    resize: none;
+    overflow: hidden;
+    -moz-border-radius: 6px 6px 0 0;
+    -webkit-border-radius: 6px 6px 0 0;
+    border-radius: 6px 6px 0 0;
+}

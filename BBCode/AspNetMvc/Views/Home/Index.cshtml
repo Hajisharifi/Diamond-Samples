@@ -1,0 +1,48 @@
+﻿@model IHtmlString
+@{
+    this.ViewBag.Title = "Test Page";
+}
+
+<form method="POST" action="?">
+
+    <div class="jumbotron">
+        <h1>ASP.NET MVC5 BBCode test</h1>
+        <p class="lead"><i>The first time is slow</i></p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h2>BBCode</h2>
+            <p>
+                <textarea name="Source" class="bbcode-editor" rows="20">
+[b]BBCode[/b] [color='red']render[/color] [size=5]test[/size].
+[img]/Content/file.png[/img]
+[quote=admin]a quote :)[/quote]
+[youtube]8Cwb0d_WeKs[/youtube]
+[SIZE=7]HUGE![/SIZE]
+
+[i]BBCode Editors:[/i]
+[list]
+[li][url='https://www.sceditor.com/documentation/formats/bbcode']SCEditor[/url][/li]
+[li][url="https://www.tinymce.com/docs/plugins/bbcode"]TinyMCE[/url][/li]
+[li][url='http://wysibb.com']WysiBB[/url][/li]
+[li][url='https://ckeditor.com/cke4/addon/bbcode']CKEditor[/url][/li]
+[li][url='https://www.systutorials.com/tools/bbeditor/']SysTutorials[/url][/li]
+[/list]
+
+[abc]Not found Tag
+                </textarea>
+            </p>
+            <p>
+                <input type="submit" value="Send" style="width:100%;max-width:none;" />
+            </p>
+        </div>
+
+        <div class="col-md-6">
+            <h2>Html-View</h2>
+            <div class="bbcode-viewer">@this.Model</div>
+        </div>
+
+    </div>
+
+</form>

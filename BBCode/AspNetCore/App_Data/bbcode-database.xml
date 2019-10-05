@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<doc>
+  <!--<DataRow>
+    <TagName>name</TagName>
+    <RenderCode>Razor template (html+C#)</RenderCode>
+    <ValidationCode>C#</ValidationCode>
+  </DataRow>-->
+  
+  <DataRow>
+    <TagName>b</TagName>
+    <RenderCode>&lt;b class="bbcode-b"&gt;@RenderBody()&lt;/b&gt;</RenderCode>
+    <ValidationCode>
+      if (Node.Inner.IsEmpty()) return TagValidation.Remove;
+    </ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>i</TagName>
+    <RenderCode>&lt;i class="bbcode-i"&gt;@RenderBody()&lt;/i&gt;</RenderCode>
+    <ValidationCode>
+      if (Node.Inner.IsEmpty()) return TagValidation.Remove;
+    </ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>u</TagName>
+    <RenderCode>&lt;u&gt;@RenderBody()&lt;/u&gt;</RenderCode>
+    <ValidationCode>
+      if (Node.Inner.IsEmpty()) return TagValidation.Remove;
+    </ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>s</TagName>
+    <RenderCode>&lt;s&gt;@RenderBody()&lt;/s&gt;</RenderCode>
+    <ValidationCode>
+      if (Node.Inner.IsEmpty()) return TagValidation.Remove;
+    </ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>center</TagName>
+    <RenderCode>&lt;center class="bbcode-center"&gt;@RenderBody()&lt;/center&gt;</RenderCode>
+    <ValidationCode>
+      if (Node.Inner.IsEmpty()) return TagValidation.Remove;
+    </ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>left</TagName>
+    <RenderCode>&lt;div class="bbcode-left" align="left"&gt;@RenderBody()&lt;/div&gt;</RenderCode>
+    <ValidationCode>
+      if (Node.Inner.IsEmpty()) return TagValidation.Remove;
+    </ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>right</TagName>
+    <RenderCode>&lt;div class="bbcode-right" align="right"&gt;@RenderBody()&lt;/div&gt;</RenderCode>
+    <ValidationCode>
+      if (Node.Inner.IsEmpty()) return TagValidation.Remove;
+    </ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>ltr</TagName>
+    <RenderCode>&lt;div class="bbcode-ltr" dir="ltr"&gt;@RenderBody()&lt;/div&gt;</RenderCode>
+    <ValidationCode>
+      if (Node.Inner.IsEmpty()) return TagValidation.Remove;
+    </ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>rtl</TagName>
+    <RenderCode>&lt;div class="bbcode-rtl" dir="rtl"&gt;@RenderBody()&lt;/div&gt;</RenderCode>
+    <ValidationCode>
+      if (Node.Inner.IsEmpty()) return TagValidation.Remove;
+    </ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>size</TagName>
+    <RenderCode>&lt;div class="bbcode-size" style="font-size: @(5*Node.Attrib().Clamp(1,9,2))px"&gt;@RenderBody()&lt;/div&gt;</RenderCode>
+    <ValidationCode>
+      if (Node.Inner.IsEmpty()) return TagValidation.Remove;
+      if (!Node.Attrib().IsInRange(1,9)) return TagValidation.Ignore;
+    </ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>code</TagName>
+    <RenderCode>&lt;pre class="bbcode-code" dir="ltr"&gt;@RenderBody()&lt;/pre&gt;</RenderCode>
+    <ValidationCode>
+      if (Node.Inner.IsEmpty()) return TagValidation.Remove;
+    </ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>color</TagName>
+    <RenderCode>&lt;div class="bbcode-color" style="color: @Node.Attrib()"&gt;@RenderBody()&lt;/div&gt;</RenderCode>
+    <ValidationCode>
+      if (Node.Inner.IsEmpty()) return TagValidation.Remove;
+      if (Node.Attrib().IsEmpty()) return TagValidation.Ignore;
+    </ValidationCode>
+  </DataRow>
+  
+  <DataRow>
+    <TagName>email</TagName>
+    <RenderCode>&lt;a href="mailto:@Node.Attrib().IIf(Node.Inner)" target="_blank"&gt;@RenderBody().IIf(Node.Attrib())&lt;/a&gt;</RenderCode>
+    <ValidationCode>
+      if (Node.Inner.IsEmpty() &amp;&amp; Node.Attrib().IsEmpty()) return TagValidation.Ignore;
+	</ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>font</TagName>
+    <RenderCode>&lt;div class="bbcode-font" style="font-family: @Node.Attrib()"&gt;@RenderBody()&lt;/div&gt;</RenderCode>
+    <ValidationCode>
+      if (Node.Inner.IsEmpty()) return TagValidation.Remove;
+      if (Node.Attrib().IsEmpty()) return TagValidation.Ignore;
+    </ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>img</TagName>
+    <RenderCode>
+      @{
+      int w = Node.Attributes["width"].Clamp(10, 500, 0);
+      int h = Node.Attributes["height"].Clamp(10, 500, 0);
+      }
+      &lt;div class="bbcode-img"&gt;&lt;img
+      @(w &gt; 0 ? string.Format("width='{0}px'", w) : "")
+      @(h &gt; 0 ? string.Format("height='{0}px'", h) : "")
+      src="@Node.Attrib().IIf(Node.Inner)"
+      alt=""
+      border="0"
+      onload="$.BBCode.ImgLoad(this);" /&gt;&lt;/div&gt;
+    </RenderCode>
+    <ValidationCode>
+      if (Node.Inner.IsEmpty() &amp;&amp; Node.Attrib().IsEmpty()) return TagValidation.Remove;
+    </ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>quote</TagName>
+    <RenderCode>
+      &lt;div class="bbcode-quote"&gt;
+      &lt;div&gt;
+      &lt;img title="quote" alt="quote" src="/Content/bbcode-quote.png"&gt;
+      @if(!Node.Attrib().IsEmpty()){ &lt;text&gt;Originally posted by &lt;strong&gt;@Node.Attrib()&lt;/strong&gt;&lt;/text&gt; }
+      &lt;/div&gt;
+      @RenderBody()
+      &lt;/div&gt;
+    </RenderCode>
+    <ValidationCode>
+      if (Node.Inner.IsEmpty()) return TagValidation.Remove;
+    </ValidationCode>
+  </DataRow>
+  
+  <DataRow>
+    <TagName>table</TagName>
+    <RenderCode>&lt;table&gt;@RenderBody(true)&lt;/table&gt;</RenderCode>
+    <ValidationCode>
+      if (Node.Childs.IsEmpty()) return TagValidation.Remove;
+      if (!Node.AllChilds("tr")) return TagValidation.Ignore;
+    </ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>tr</TagName>
+    <RenderCode>&lt;tr&gt;@RenderBody(true)&lt;/tr&gt;</RenderCode>
+    <ValidationCode>
+      if ((!Node.HasParent("table")) || (!Node.AllChilds("td","th"))) return TagValidation.Ignore;
+    </ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>th</TagName>
+    <RenderCode>&lt;th width="@(((object)Node.Attribs.Width).Clamp(10, 300, "auto"))"&gt;@RenderBody()&lt;/th&gt;</RenderCode>
+    <ValidationCode>
+      if (!Node.HasParent("tr")) return TagValidation.Ignore;
+    </ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>td</TagName>
+    <RenderCode>&lt;td width="@(((object)Node.Attribs.Width).Clamp(10, 300, "auto"))"&gt;@RenderBody()&lt;/td&gt;</RenderCode>
+    <ValidationCode>
+      if (!Node.HasParent("tr")) return TagValidation.Ignore;
+    </ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>url</TagName>
+    <RenderCode>
+      &lt;a class="bbcode-url" target="_blank" href="@Node.Attrib().IIf(Node.Inner)"&gt;@RenderBody().IIf(Node.Attrib())&lt;/a&gt;
+    </RenderCode>
+    <ValidationCode>
+      if (Node.Inner.IsEmpty() &amp;&amp; Node.Attrib().IsEmpty()) return TagValidation.Ignore;
+    </ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>ul</TagName>
+    <RenderCode>&lt;ul&gt;@RenderBody(true)&lt;/ul&gt;</RenderCode>
+    <ValidationCode>
+      if (Node.Childs.IsEmpty()) return TagValidation.Remove;
+      if (!Node.AllChilds("li","*")) return TagValidation.Ignore;
+    </ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>ol</TagName>
+    <RenderCode>&lt;ol&gt;@RenderBody(true)&lt;/ol&gt;</RenderCode>
+    <ValidationCode>
+      if (Node.Childs.IsEmpty()) return TagValidation.Remove;
+      if (!Node.AllChilds("li","*")) return TagValidation.Ignore;
+    </ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>list</TagName>
+    <RenderCode>&lt;ul&gt;@RenderBody(true)&lt;/ul&gt;</RenderCode>
+    <ValidationCode>
+      if (Node.Childs.IsEmpty()) return TagValidation.Remove;
+      if (!Node.AllChilds("li","*")) return TagValidation.Ignore;
+    </ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>li</TagName>
+    <RenderCode>&lt;li&gt;@RenderBody()&lt;/li&gt;</RenderCode>
+    <ValidationCode>
+      if (!Node.HasParent("ul","ol","list")) return TagValidation.Ignore;
+    </ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>*</TagName>
+    <RenderCode>&lt;li&gt;@RenderBody()&lt;/li&gt;</RenderCode>
+    <ValidationCode>
+      if (!Node.HasParent("ul","ol","list")) return TagValidation.Ignore;
+    </ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>sub</TagName>
+    <RenderCode>&lt;sub&gt;@RenderBody()&lt;/sub&gt;</RenderCode>
+    <ValidationCode>
+      if (Node.Inner.IsEmpty()) return TagValidation.Remove;
+    </ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>sup</TagName>
+    <RenderCode>&lt;sup&gt;@RenderBody()&lt;/sup&gt;</RenderCode>
+    <ValidationCode>
+      if (Node.Inner.IsEmpty()) return TagValidation.Remove;
+    </ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>hr</TagName>
+    <RenderCode>&lt;hr/&gt;@RenderBody()</RenderCode>
+    <ValidationCode></ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>youtube</TagName>
+    <RenderCode>
+      &lt;div class="bbcode-youtube"&gt;
+      &lt;iframe width="500" height="400" src="https://www.youtube.com/embed/@Node.Inner.IIf(Node.Attrib())" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen&gt;&lt;/iframe&gt;
+      &lt;/div&gt;
+    </RenderCode>
+    <ValidationCode>
+      if (Node.Inner.IsEmpty() &amp;&amp; Node.Attrib().IsEmpty()) return TagValidation.Remove;
+	</ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>gvideo</TagName>
+    <RenderCode></RenderCode>
+    <ValidationCode></ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>spoiler</TagName>
+    <RenderCode></RenderCode>
+    <ValidationCode></ValidationCode>
+  </DataRow>
+
+  <DataRow>
+    <TagName>video</TagName>
+    <RenderCode></RenderCode>
+    <ValidationCode></ValidationCode>
+  </DataRow>
+</doc>
