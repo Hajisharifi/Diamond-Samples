@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31313.79
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core_FileStorage", "Core_FileStorage.csproj", "{490AD4F2-2569-4A53-B1C6-3DAD136660B1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{490AD4F2-2569-4A53-B1C6-3DAD136660B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{490AD4F2-2569-4A53-B1C6-3DAD136660B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{490AD4F2-2569-4A53-B1C6-3DAD136660B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{490AD4F2-2569-4A53-B1C6-3DAD136660B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EB59E6A-C5B1-4907-8E2E-EDEFBC68ACC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EB59E6A-C5B1-4907-8E2E-EDEFBC68ACC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EB59E6A-C5B1-4907-8E2E-EDEFBC68ACC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EB59E6A-C5B1-4907-8E2E-EDEFBC68ACC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5F6CDA4-A373-4985-B014-1C016258370D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5F6CDA4-A373-4985-B014-1C016258370D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5F6CDA4-A373-4985-B014-1C016258370D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5F6CDA4-A373-4985-B014-1C016258370D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C0315AC0-958E-495C-8DE1-DCB51E5EB9BA}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,42 @@
+﻿@model IEnumerable<H2.Core_FileStorage.Models.File>
+@{
+    this.ViewBag.Title = "Welcome";
+}
+
+<h2>Home</h2>
+<p>
+    <a asp-action="Upload">New Upload</a>
+</p>
+<table class="grid">
+    <tr>
+        <th>
+            FileSize
+        </th>
+        <th>
+            FileName
+        </th>
+        <th>
+            RegisterDate
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in this.Model)
+    {
+        <tr>
+            <td>
+                @item.FileSize
+            </td>
+            <td>
+                @item.FileName
+            </td>
+            <td>
+                @item.RegisterDate
+            </td>
+            <td>
+                <a asp-action="Download" asp-route-id="@item.FileId">Download</a>
+            </td>
+        </tr>
+    }
+
+</table>

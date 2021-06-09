@@ -1,0 +1,9 @@
+﻿@{
+    this.ViewBag.Title = "Upload";
+}
+
+<h2>Upload</h2>
+<form method="POST" enctype="multipart/form-data" asp-antiforgery="true">
+    <input name="postfile" type="file" /><br />
+    <input type="submit" value="Submit" />
+</form>

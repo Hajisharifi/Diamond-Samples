@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@this.ViewBag.Title</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/Site.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">FileStorage</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @this.RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - <a href="http://simorghx.ir" target="_blank">H.Hajisharifi</a></p>
+        </footer>
+    </div>
+    <script src="/js/jquery-1.12.4.min.js"></script>
+    <script src="/js/modernizr-2.8.3.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    @this.RenderSection("scripts", required: false)
+</body>
+</html>
