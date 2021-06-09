@@ -1,34 +1,38 @@
 ﻿using System;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 using Diamond.FileStorage;
+using System.Threading.Tasks;
 
 namespace H2.Mvc_FileStorage.Controllers
 {
-    public class FileStorage
-        : Diamond.FileStorage.StorageManager
+    public static class FileStorage
     {
         //________________________________________________________________________
 
-        private FileStorage()
-        {
-            //((Diamond.FileStorage.LocalFileSystemProvider)this.FileSystem).UseDecimalPathBuilder = false; //compatibility with old version 04.2013.10.0
-            ((Diamond.FileStorage.LocalFileSystemProvider)this.FileSystem).SetVirtualPath(@"~\App_Data\FileStorage");
-            this.Interceptor = new DatabaseProvider(); //Optional
-        }
+        private static StorageManager m_Current;
+        private static bool m_Initialized;
+        private static object m_SyncLock = new object();
         //________________________________________________________________________
 
         /// <summary>
         /// singleton object
         /// </summary>
-        private static FileStorage m_Current;
-        public static FileStorage Current
+        public static StorageManager Current
         {
             get
             {
                 if (m_Current == null)
-                    System.Threading.Interlocked.CompareExchange(ref m_Current, new FileStorage(), null);
+                {
+                    return System.Threading.LazyInitializer.EnsureInitialized(
+                        ref m_Current,
+                        ref m_Initialized,
+                        ref m_SyncLock, () =>
+                        {
+                            var options = new StorageManagerOptions();
+                            options.SetVirtualPath(@"~\App_Data\FileStorage");
+                            options.FileInterceptor = new DatabaseProvider(); //Optional
+                            return new StorageManager(options);
+                        });
+                }
                 return m_Current;
             }
         }
@@ -38,25 +42,26 @@ namespace H2.Mvc_FileStorage.Controllers
     public class DatabaseProvider
         : Diamond.FileStorage.IFileInterceptor
     {
-        public FileOption GetFileOption(long ID, string alternateDataStream)
+        public ValueTask<FileOption> GetFileOptionAsync(long ID, string alternateDataStream)
         {
             var ret = new FileOption(ID, alternateDataStream);
-            if (!string.IsNullOrEmpty(alternateDataStream)) return ret;
+            if (!string.IsNullOrEmpty(alternateDataStream)) return new ValueTask<FileOption>(ret);
             using (var da = new Models.Context())
             {
                 var row = da.Files.Find(ID);
-                if (row == null) return null;
+                if (row == null) return default;
                 ret.FileName = row.FileName;
                 ret.FileSize = row.FileSize;
                 ret.ContentType = row.ContentType;
                 ret.DataTokens[FileOption.TOKEN_CREATIONTIME] = row.RegisterDate;
             }
-            return ret;
+            return new ValueTask<FileOption>(ret);
         }
 
-        public void BeginUpload(FileOption file)
+        public async ValueTask BeginUploadAsync(FileOption file)
         {
             if (!string.IsNullOrEmpty(file.AlternateDataStream)) return;
+            //if (file.ID > 0) DB-UPDATE for change or reupload a file
             var row = new Models.File()
             {
                 FileName = file.FileName,
@@ -67,12 +72,12 @@ namespace H2.Mvc_FileStorage.Controllers
             using (var da = new Models.Context())
             {
                 da.Files.Add(row);
-                da.SaveChanges();
+                await da.SaveChangesAsync();
             }
             file.ID = row.FileId;
         }
 
-        public void EndDelete(FileOption file)
+        public async ValueTask EndDeleteAsync(FileOption file)
         {
             if (!string.IsNullOrEmpty(file.AlternateDataStream)) return;
             using (var da = new Models.Context())
@@ -80,14 +85,14 @@ namespace H2.Mvc_FileStorage.Controllers
                 var row = da.Files.Find(file.ID);
                 if (row == null) return;
                 da.Files.Remove(row);
-                da.SaveChanges();
+                await da.SaveChangesAsync();
             }
         }
 
-        public void EndUpload(FileOption file) { }
-        public void BeginDelete(FileOption file) { }
-        public void BeginDownload(FileOption file) { }
-        public void EndDownload(FileOption file) { }
+        public ValueTask EndUploadAsync(FileOption file) { return default; } //Always
+        public ValueTask BeginDeleteAsync(FileOption file) { return default; }
+        public ValueTask BeginDownloadAsync(FileOption file) { return default; }
+        public ValueTask EndDownloadAsync(FileOption file) { return default; }
     }
     //________________________________________________________________________
 
