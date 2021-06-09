@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using System.Data.Entity;
 using Diamond.FileStorage;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -14,29 +15,29 @@ namespace H2.Mvc_FileStorage.Controllers
 
         public async Task<ActionResult> Index()
         {
-            const long SAMPLE_FILE_ID = 123;
+            //const long SAMPLE_FILE_ID = 123;
 
-            using (var w = await FileStorage.Current.CreateTextAsync(SAMPLE_FILE_ID))
-            {
-                w.WriteLine("Line1");
-                w.WriteLine("Line2");
-                w.WriteLine("Line3");
-            }
+            //using (var w = await FileStorage.Current.CreateTextAsync(SAMPLE_FILE_ID))
+            //{
+            //    w.WriteLine("Line1");
+            //    w.WriteLine("Line2");
+            //    w.WriteLine("Line3");
+            //}
 
-            using (var w = await FileStorage.Current.AppendTextAsync(SAMPLE_FILE_ID))
-            {
-                w.WriteLine("Line4");
-                w.WriteLine("Line5");
-            }
+            //using (var w = await FileStorage.Current.AppendTextAsync(SAMPLE_FILE_ID))
+            //{
+            //    w.WriteLine("Line4");
+            //    w.WriteLine("Line5");
+            //}
 
-            using (var w = await FileStorage.Current.CreateTextAsync(SAMPLE_FILE_ID, "myMetaData"))
-            {
-                w.WriteLine("Metadata attached to the main file");
-            }
+            //using (var w = await FileStorage.Current.CreateTextAsync(SAMPLE_FILE_ID, "myMetaData"))
+            //{
+            //    w.WriteLine("Metadata attached to the main file");
+            //}
 
             IList<Models.File> list;
             using (var da = new Models.Context())
-                list = da.Files.ToList();
+                list = await da.Files.ToListAsync();
 
             return this.View(list);
         }
@@ -48,7 +49,7 @@ namespace H2.Mvc_FileStorage.Controllers
             if (file == null) return new HttpNotFoundResult();
 
             file.Merge(this.Request.CreateDownloadFileOption(id));
-            file.TransferSpeed = 1024; //50KB per second
+            //file.TransferSpeed = 50 * 1024; //50KB per second
             file.TransferResumable = true; //resumable download support
             //file...
 
