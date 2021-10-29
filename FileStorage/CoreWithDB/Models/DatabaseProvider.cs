@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace H2.Core_FileStorage.Models
 {
     public class DatabaseProvider
-        : IFileInterceptor
+        : IFileInterceptor<long>
     {
         //________________________________________________________________________
 
@@ -19,10 +19,10 @@ namespace H2.Core_FileStorage.Models
         }
         //________________________________________________________________________
 
-        public ValueTask<FileOption> GetFileOptionAsync(long ID, string alternateDataStream)
+        public ValueTask<FileOption<long>> GetFileOptionAsync(long ID, string alternateDataStream)
         {
-            var ret = new FileOption(ID, alternateDataStream);
-            if (!string.IsNullOrEmpty(alternateDataStream)) return new ValueTask<FileOption>(ret);
+            var ret = FileOption.Create(ID, alternateDataStream);
+            if (!string.IsNullOrEmpty(alternateDataStream)) return new ValueTask<FileOption<long>>(ret);
 
             using var scope = this.m_ServiceScopeFactory.CreateScope();
             var db = scope.ServiceProvider.GetService<Models.Context>();
@@ -33,11 +33,15 @@ namespace H2.Core_FileStorage.Models
             ret.ContentType = row.ContentType;
             ret.DataTokens[FileOption.TOKEN_CREATIONTIME] = row.RegisterDate;
 
-            return new ValueTask<FileOption>(ret);
+            return new ValueTask<FileOption<long>>(ret);
+        }
+        async ValueTask<FileOption> IFileOptionsProvider.GetFileOptionAsync(object ID, string AlternateDataStream)
+        {
+            return await this.GetFileOptionAsync(ID is null ? 0L : (long)ID, AlternateDataStream);
         }
         //________________________________________________________________________
 
-        public async ValueTask BeginUploadAsync(FileOption file)
+        public async ValueTask BeginUploadAsync(FileOption<long> file)
         {
             if (!string.IsNullOrEmpty(file.AlternateDataStream)) return;
             //if (file.ID > 0) DB-UPDATE for change or reupload a file
@@ -58,7 +62,7 @@ namespace H2.Core_FileStorage.Models
         }
         //________________________________________________________________________
 
-        public async ValueTask EndDeleteAsync(FileOption file)
+        public async ValueTask EndDeleteAsync(FileOption<long> file)
         {
             if (!string.IsNullOrEmpty(file.AlternateDataStream)) return;
 
@@ -71,22 +75,10 @@ namespace H2.Core_FileStorage.Models
         }
         //________________________________________________________________________
 
-        public ValueTask EndUploadAsync(FileOption file) => default; //Always
-        public ValueTask BeginDeleteAsync(FileOption file) => default;
-        public ValueTask BeginDownloadAsync(FileOption file) => default;
-        public ValueTask EndDownloadAsync(FileOption file) => default;
+        public ValueTask EndUploadAsync(FileOption<long> file) => default; //Always
+        public ValueTask BeginDeleteAsync(FileOption<long> file) => default;
+        public ValueTask BeginDownloadAsync(FileOption<long> file) => default;
+        public ValueTask EndDownloadAsync(FileOption<long> file) => default;
     }
     //________________________________________________________________________
-
-    /*public class MyUploadHttpModule
-        : UploadHttpModule
-    {
-        public MyUploadHttpModule()
-        {
-            this.AllowHttpMethods = new[] { "POST" };
-            this.StorageManager = FileStorage.Current;
-        }
-        //override OnBeginUpload...
-        //override OnEndUpload...
-    }*/
 }

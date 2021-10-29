@@ -32,10 +32,11 @@ namespace H2.Core_FileStorage
                 ServiceLifetime.Scoped,
                 ServiceLifetime.Singleton);
 
-            services.AddSingleton<IFileInterceptor, Models.DatabaseProvider>();
-            services.AddFileStorage(options =>
+            services.AddSingleton<IFileInterceptor<long>, Models.DatabaseProvider>();
+            services.AddFileStorage<long>(options =>
             {
-                options.SetVirtualPath(this.m_Environment, @"~\Data\FileStorage\");
+                options.Path = @"~\Data\FileStorage\";
+                //options.FilePathFactory = new Diamond.FileStorage.Infrastructure.V2Int64DecimalFilePathFactory(); //Support old FileStorage version
             });
         }
         //________________________________________________________________________

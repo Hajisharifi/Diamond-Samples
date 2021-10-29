@@ -8,7 +8,7 @@ namespace H2.Mvc_FileStorage.Controllers
     {
         //________________________________________________________________________
 
-        private static StorageManager m_Current;
+        private static IStorageManager<long> m_Current;
         private static bool m_Initialized;
         private static object m_SyncLock = new object();
         //________________________________________________________________________
@@ -16,7 +16,7 @@ namespace H2.Mvc_FileStorage.Controllers
         /// <summary>
         /// singleton object
         /// </summary>
-        public static StorageManager Current
+        public static IStorageManager<long> Current
         {
             get
             {
@@ -27,10 +27,11 @@ namespace H2.Mvc_FileStorage.Controllers
                         ref m_Initialized,
                         ref m_SyncLock, () =>
                         {
-                            var options = new StorageManagerOptions();
+                            var options = new StorageManagerOptions<long>(); ;
                             options.SetVirtualPath(@"~\App_Data\FileStorage");
                             options.FileInterceptor = new DatabaseProvider(); //Optional
-                            return new StorageManager(options);
+                            //options.FilePathFactory = new Diamond.FileStorage.Infrastructure.V2Int64DecimalFilePathFactory(); //Support old FileStorage version
+                            return new StorageManager<long>(options);
                         });
                 }
                 return m_Current;
@@ -40,12 +41,12 @@ namespace H2.Mvc_FileStorage.Controllers
     //________________________________________________________________________
 
     public class DatabaseProvider
-        : Diamond.FileStorage.IFileInterceptor
+        : Diamond.FileStorage.IFileInterceptor<long>
     {
-        public ValueTask<FileOption> GetFileOptionAsync(long ID, string alternateDataStream)
+        public ValueTask<FileOption<long>> GetFileOptionAsync(long ID, string alternateDataStream)
         {
-            var ret = new FileOption(ID, alternateDataStream);
-            if (!string.IsNullOrEmpty(alternateDataStream)) return new ValueTask<FileOption>(ret);
+            var ret = FileOption<long>.Create(ID, alternateDataStream);
+            if (!string.IsNullOrEmpty(alternateDataStream)) return new ValueTask<FileOption<long>>(ret);
             using (var da = new Models.Context())
             {
                 var row = da.Files.Find(ID);
@@ -55,10 +56,14 @@ namespace H2.Mvc_FileStorage.Controllers
                 ret.ContentType = row.ContentType;
                 ret.DataTokens[FileOption.TOKEN_CREATIONTIME] = row.RegisterDate;
             }
-            return new ValueTask<FileOption>(ret);
+            return new ValueTask<FileOption<long>>(ret);
+        }
+        async ValueTask<FileOption> IFileOptionsProvider.GetFileOptionAsync(object ID, string AlternateDataStream)
+        {
+            return await this.GetFileOptionAsync(ID is null ? 0L : (long)ID, AlternateDataStream);
         }
 
-        public async ValueTask BeginUploadAsync(FileOption file)
+        public async ValueTask BeginUploadAsync(FileOption<long> file)
         {
             if (!string.IsNullOrEmpty(file.AlternateDataStream)) return;
             //if (file.ID > 0) DB-UPDATE for change or reupload a file
@@ -77,7 +82,7 @@ namespace H2.Mvc_FileStorage.Controllers
             file.ID = row.FileId;
         }
 
-        public async ValueTask EndDeleteAsync(FileOption file)
+        public async ValueTask EndDeleteAsync(FileOption<long> file)
         {
             if (!string.IsNullOrEmpty(file.AlternateDataStream)) return;
             using (var da = new Models.Context())
@@ -89,10 +94,10 @@ namespace H2.Mvc_FileStorage.Controllers
             }
         }
 
-        public ValueTask EndUploadAsync(FileOption file) { return default; } //Always
-        public ValueTask BeginDeleteAsync(FileOption file) { return default; }
-        public ValueTask BeginDownloadAsync(FileOption file) { return default; }
-        public ValueTask EndDownloadAsync(FileOption file) { return default; }
+        public ValueTask EndUploadAsync(FileOption<long> file) { return default; } //Always
+        public ValueTask BeginDeleteAsync(FileOption<long> file) { return default; }
+        public ValueTask BeginDownloadAsync(FileOption<long> file) { return default; }
+        public ValueTask EndDownloadAsync(FileOption<long> file) { return default; }
     }
     //________________________________________________________________________
 

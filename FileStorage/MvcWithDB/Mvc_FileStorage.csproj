@@ -10,6 +10,7 @@
     <ProjectGuid>{1D11D886-4BDE-4C12-8484-0475B3B8568E}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
+    <LangVersion>latest</LangVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>H2.Mvc_FileStorage</RootNamespace>
     <AssemblyName>Mvc_FileStorage</AssemblyName>
@@ -46,10 +47,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Diamond.FileStorage">
-      <HintPath>packages\Diamond.FileStorage.2021.5.0\lib\net45\Diamond.FileStorage.dll</HintPath>
+      <HintPath>packages\Diamond.FileStorage.2021.10.0\lib\net45\Diamond.FileStorage.dll</HintPath>
     </Reference>
     <Reference Include="Diamond.FileStorage.Web">
-      <HintPath>packages\Diamond.FileStorage.2021.5.0\lib\net45\Diamond.FileStorage.Web.dll</HintPath>
+      <HintPath>packages\Diamond.FileStorage.2021.10.0\lib\net45\Diamond.FileStorage.Web.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe">

@@ -14,10 +14,10 @@ namespace H2.Core_FileStorage.Controllers
         //________________________________________________________________________
 
         private readonly Models.Context m_DbContext;
-        private readonly IStorageManager m_StorageManager;
+        private readonly IStorageManager<long> m_StorageManager;
         //________________________________________________________________________
 
-        public HomeController(IStorageManager storageManager, Models.Context dbContext)
+        public HomeController(IStorageManager<long> storageManager, Models.Context dbContext)
         {
             this.m_DbContext = dbContext;
             this.m_StorageManager = storageManager;
@@ -53,10 +53,9 @@ namespace H2.Core_FileStorage.Controllers
 
         public async Task<ActionResult> Download(long id)
         {
-            var file = await this.m_StorageManager.GetFileOptionAsync(id, null);
+            var file = await this.m_StorageManager.GetFileOptionAsync(this.Request, id, null);
             if (file is null) return this.NotFound();
 
-            file.Merge(this.Request.CreateDownloadFileOption(id));
             //file.TransferSpeed = 50 * 1024; //50KB per second
             file.TransferResumable = true; //resumable download support
             //file...
@@ -72,10 +71,10 @@ namespace H2.Core_FileStorage.Controllers
         //________________________________________________________________________
 
         [HttpPost]
-        public async Task<ActionResult> Upload(IFormFile postfile)
+        public async Task<ActionResult> Upload(IFormFile postFile)
         {
-            var file = postfile.CreateUploadFileOption();
-            using var stream = postfile?.OpenReadStream();
+            var file = this.m_StorageManager.CreateUploadFileOption(postFile);
+            using var stream = postFile?.OpenReadStream();
             await this.m_StorageManager.UploadAsync(file, stream);
 
             return this.RedirectToAction(nameof(Index));
