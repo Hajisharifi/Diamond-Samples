@@ -13,6 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AspNetMvc</RootNamespace>
     <AssemblyName>AspNetMvc</AssemblyName>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -54,7 +55,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Diamond.BBCode">
-      <HintPath>.\packages\Diamond.BBCode.2018.7.0\lib\net45\Diamond.BBCode.dll</HintPath>
+      <HintPath>.\packages\Diamond.BBCode.2022.0.0\lib\net45\Diamond.BBCode.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
