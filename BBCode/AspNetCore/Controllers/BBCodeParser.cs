@@ -30,7 +30,7 @@ namespace AspNetCore.Controllers
 
         public BBCodeParser(
             IServiceProvider services,
-            IHostingEnvironment environment)
+            IWebHostEnvironment environment)
         {
             this.m_Services = services;
             var rows = ReadDatabase(environment);
@@ -47,7 +47,7 @@ namespace AspNetCore.Controllers
         }
         //________________________________________________________________________
 
-        private static IList<DataRow> ReadDatabase(IHostingEnvironment environment)
+        private static IList<DataRow> ReadDatabase(IWebHostEnvironment environment)
         {
             //return EF_DB_Context.BBCodes.ToList();
 
