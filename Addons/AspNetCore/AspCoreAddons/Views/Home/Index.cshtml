@@ -1,0 +1,32 @@
+﻿@inject IAddonGroup<Microsoft.AspNetCore.Mvc.ControllerBase> x
+@inject IAddonGroup<Microsoft.AspNetCore.Mvc.RazorPages.PageModel> y
+@{
+    this.ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<hr />
+
+@foreach (var addIn in x)
+{
+    var u = addIn.Features.Get<Microsoft.Extensions.DependencyInjection.UrlParameter>();
+    <a asp-area="@u.Area" asp-controller="@u.Part" asp-action="Index">@u.Area-@u.Part</a>
+    <br />
+}
+
+@foreach (var addIn in y)
+{
+    var u = addIn.Features.Get<Microsoft.Extensions.DependencyInjection.UrlParameter>();
+    <a asp-area="@u.Area" asp-page="/@u.Part">@u.Area-@u.Part</a>
+    <br />
+}
+
+<hr />
+
+<a asp-area="Addon1" asp-page="/Page1">Addon1-Page1</a>
+<a href="/Addon1/Page1">Addon1-Page1</a>
+<a href="/Addon1/Home/Index">Addon1-Index</a>
