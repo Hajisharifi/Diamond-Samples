@@ -1,15 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
-    <RootNamespace>H2.ASP_Captcha</RootNamespace>
-    <LangVersion>latest</LangVersion>
-    <PackageProjectUrl>https://github.com/Hajisharifi/Diamond-Samples/Captcha/AspNetCore</PackageProjectUrl>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<RootNamespace>H2.ASP_Captcha</RootNamespace>
+		<LangVersion>latest</LangVersion>
+		<PackageProjectUrl>https://github.com/Hajisharifi/Diamond-Samples/Captcha/AspNetCore</PackageProjectUrl>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Diamond.AspNetCore" Version="2021.2.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Diamond.AspNetCore" Version="2023.0.0" />
+	</ItemGroup>
 
 </Project>

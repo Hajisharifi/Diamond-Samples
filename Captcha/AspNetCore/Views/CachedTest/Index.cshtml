@@ -1,13 +1,14 @@
 ﻿@inject Diamond.AspNetCore.Html.Captcha.ICachedCaptcha captcha
 @{
     this.ViewData["Title"] = "Captcha Test";
-    string Captcha_RefID = captcha.NewRefID();
+    string captchaRefID = captcha.NewRefID();
 }
 
 <form asp-antiforgery="true">
 
+    <p><a href="/DistributedTest">Distributed Captcha Test</a> | <b>Cached Captcha Test</b></p>
     <p></p>
-    <p>@this.ViewBag.Message</p>
+    <p>@this.ViewBag.Message &nbsp;</p>
     <p></p>
 
     <div class="row">
@@ -18,13 +19,13 @@
         </div>
         <div class="col-md-2 col-sm-3">
 
-            <input type="hidden" name="Captcha_RefID" value="@Captcha_RefID" />
+            <input type="hidden" id="Captcha_RefID" name="Captcha_RefID" value="@captchaRefID" />
             <input type="text" name="Input_Captcha" autocomplete="off" autocorrect="off" />
 
         </div>
         <div class="col-md-2 col-sm-3">
 
-            <img id="CaptchaImage" src="/Home/CaptchaImage/@Captcha_RefID" />
+            <img id="CaptchaImage" src="/CachedTest/CaptchaImage/@captchaRefID" />
 
         </div>
         <div class="col-md-2 col-sm-3">
@@ -39,7 +40,7 @@
                 {
                     version++;
                     var img = document.getElementById("CaptchaImage");
-                    img.src = "/Home/CaptchaImage/@Captcha_RefID?version=" + version;
+                    img.src = "/CachedTest/CaptchaImage/@captchaRefID?version=" + version;
                     return false;
                 }
 
