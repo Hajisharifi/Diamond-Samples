@@ -1,0 +1,78 @@
+﻿@inject Diamond.AspNetCore.Html.Captcha.IDistributedCaptcha captcha
+@{
+    this.ViewData["Title"] = "Distributed Captcha Test";
+    string captchaRefID = captcha.NewRefID();
+}
+
+@section Scripts {
+    <script src="~/lib/jquery/jquery-1.12.4.min.js"></script>
+}
+
+<form asp-antiforgery="true">
+
+    <p><b>Distributed Captcha Test</b> | <a href="/CachedTest">Cached Captcha Test</a></p>
+    <p></p>
+    <p>@this.ViewBag.Message &nbsp;</p>
+    <p></p>
+
+    <div class="row">
+        <div class="col-md-1 col-sm-1">
+
+            Captcha
+
+        </div>
+        <div class="col-md-2 col-sm-3">
+
+            <input type="hidden" id="Captcha_RefID" name="Captcha_RefID" value="@captchaRefID" />
+            <input type="text" name="Input_Captcha" autocomplete="off" autocorrect="off" />
+
+        </div>
+        <div class="col-md-2 col-sm-3">
+
+            <img id="CaptchaImage" src="/DistributedTest/CaptchaImage/@captchaRefID" />
+
+        </div>
+        <div class="col-md-2 col-sm-3">
+
+            <a href="#" onclick="OnCaptchaRefresh()">Refresh</a>
+
+            <script language="javascript">
+
+                function OnCaptchaRefresh() {
+
+                    var rvt = document.getElementsByName("__RequestVerificationToken")[0].value;
+
+                    $.ajax({
+                        cache: false,
+                        method: "POST",
+                        dataType: "text",
+                        url: "/DistributedTest/CaptchaRefresh",
+                        data: { __RequestVerificationToken: rvt },
+                        contentType: "application/x-www-form-urlencoded"
+
+                    }).done(function (refID) {
+
+                        if (typeof refID !== "string") return;
+
+                        var img = document.getElementById("CaptchaImage");
+                        img.src = "/DistributedTest/CaptchaImage/" + refID;
+
+                        var token = document.getElementById("Captcha_RefID")
+                        token.value = refID;
+                    });
+
+                    return false;
+                }
+
+            </script>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 col-sm-4">
+            <input type="submit" name="submit" value="Submit" />
+        </div>
+    </div>
+
+</form>
