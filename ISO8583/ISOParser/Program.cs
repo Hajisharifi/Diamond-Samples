@@ -94,7 +94,9 @@ namespace ISOParser
                     return;
                 }
 
-                var serializer = new Diamond.ISO8583.Serialization.IsoSerializer(config, null);
+                //var mac = new Diamond.ISO8583.Security.Cryptography.MAC_ANSI_X9_19();
+                //mac.Key = StrEncoding.Hex.GetBytes("0123456789ABCDEF0123456789ABCDEF");
+                var serializer = new Diamond.ISO8583.Serialization.IsoSerializer(config, null/*mac*/);
                 var buf = new byte[64 * 1024 + 10];
                 string? dump = GetDump(args);
 
