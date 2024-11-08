@@ -1,0 +1,18 @@
+﻿@page
+@model IndexModel
+@{
+    this.ViewData["Title"] = "Home page";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col align-self-center">
+            <h1 class="display-4">Welcome</h1>
+            <center><img src="/db.png" style="display:block" /></center>
+            <div>
+                DB-Settings BBB = <b>@Model.MySettings.BBB</b><br />
+                DB-Settings CCC = <b>@string.Join(",", Model.MySettings.CCC!)</b><br />
+            </div>
+        </div>
+    </div>
+</div>
