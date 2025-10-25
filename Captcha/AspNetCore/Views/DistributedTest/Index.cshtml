@@ -1,11 +1,11 @@
-﻿@inject Diamond.AspNetCore.Html.Captcha.IDistributedCaptcha captcha
+﻿@inject Diamond.AspNetCore.Html.IDistributedCaptcha captcha
 @{
     this.ViewData["Title"] = "Distributed Captcha Test";
     string captchaRefID = captcha.NewRefID();
 }
 
 @section Scripts {
-    <script src="~/lib/jquery/jquery-1.12.4.min.js"></script>
+    <script src="/lib/jquery/jquery-1.12.4.min.js"></script>
 }
 
 <form asp-antiforgery="true">
@@ -21,18 +21,18 @@
             Captcha
 
         </div>
-        <div class="col-md-2 col-sm-3">
+        <div class="col-md-3 col-sm-4">
 
             <input type="hidden" id="Captcha_RefID" name="Captcha_RefID" value="@captchaRefID" />
             <input type="text" name="Input_Captcha" autocomplete="off" autocorrect="off" />
 
         </div>
-        <div class="col-md-2 col-sm-3">
+        <div class="col-md-3 col-sm-4">
 
             <img id="CaptchaImage" src="/DistributedTest/CaptchaImage/@captchaRefID" />
 
         </div>
-        <div class="col-md-2 col-sm-3">
+        <div class="col-md-3 col-sm-4">
 
             <a href="#" onclick="OnCaptchaRefresh()">Refresh</a>
 

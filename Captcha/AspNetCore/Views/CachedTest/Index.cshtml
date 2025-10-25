@@ -1,4 +1,4 @@
-﻿@inject Diamond.AspNetCore.Html.Captcha.ICachedCaptcha captcha
+﻿@inject Diamond.AspNetCore.Html.ICachedCaptcha captcha
 @{
     this.ViewData["Title"] = "Captcha Test";
     string captchaRefID = captcha.NewRefID();
@@ -17,18 +17,18 @@
             Captcha
 
         </div>
-        <div class="col-md-2 col-sm-3">
+        <div class="col-md-3 col-sm-4">
 
             <input type="hidden" id="Captcha_RefID" name="Captcha_RefID" value="@captchaRefID" />
             <input type="text" name="Input_Captcha" autocomplete="off" autocorrect="off" />
 
         </div>
-        <div class="col-md-2 col-sm-3">
+        <div class="col-md-3 col-sm-4">
 
             <img id="CaptchaImage" src="/CachedTest/CaptchaImage/@captchaRefID" />
 
         </div>
-        <div class="col-md-2 col-sm-3">
+        <div class="col-md-3 col-sm-4">
 
             <a href="#" onclick="OnCaptchaRefresh()">Refresh</a>
 
