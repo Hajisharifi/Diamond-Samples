@@ -17,12 +17,14 @@ public static class Program
         builder.Services.AddControllersWithViews();
 
 
+        builder.Services.AddHttpContextAccessor(); //use in BindingContextProvider
         /**************/
         builder.Services.AddCachedCaptcha(options =>
         {
             options.Width = 160;
             options.Height = 40;
             options.WordLength = 5;
+            options.BindingContextProvider = bc => bc.GetUser() + bc.GetIP(); //Disallowing the use of captcha-token in cross-IP and cross-user
             //options.SlidingExpiration = new TimeSpan(0, 15, 0);
         });
         /**************/
@@ -32,6 +34,7 @@ public static class Program
             options.Height = 40;
             options.WordLength = 5;
             options.CryptographyKey = "mY@PaSsWoRd$12345";
+            options.BindingContextProvider = bc => bc.GetUser() + bc.GetIP(); //Disallowing the use of captcha-token in cross-IP and cross-user
             //options.SlidingExpiration = new TimeSpan(0, 15, 0);
         });
         /**************/
